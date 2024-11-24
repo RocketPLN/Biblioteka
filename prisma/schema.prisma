@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  verified  Boolean  @default(false)
+  roles     Roles[]  @default([USER])
+  Orders    Orders[]
+}
+
+model Books {
+  id        String   @id @default(cuid())
+  title     String
+  author    String
+  release   DateTime
+  available Boolean  @default(true)
+  genre     Genre
+  Orders    Orders[]
+}
+
+model Orders {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  book      Books    @relation(fields: [booksId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  booksId   String
+  createdAt DateTime @default(now())
+  deadline  DateTime @default(dbgenerated("NOW() + '2 months'::interval"))
+  completed Boolean  @default(false)
+}
+
+enum Roles {
+  USER
+  ADMIN
+}
+
+enum Genre {
+  NOVEL
+  ROMANCE
+  SCI_FI
+  POETRY
+  MYSTERY
+  ADVENTURE
+  FANTASY
+  COMEDY
+  THRILLER
+  DRAMA
+  NON_FICTION
+  LITERARY
+  HISTORY
+}
