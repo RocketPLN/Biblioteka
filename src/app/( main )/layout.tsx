@@ -5,7 +5,7 @@ import "@/app/globals.css";
 import Provider from "@/services/trpc/Provider";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,7 +24,7 @@ export default function RootLayout({
       >
         <Provider>
           <SessionProvider>
-              <Navbar />
+            <Navbar />
             <main>
               {children} <Toaster />
             </main>
