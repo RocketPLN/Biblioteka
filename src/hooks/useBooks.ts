@@ -2,7 +2,7 @@ import { Books, Genre } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { dateMatchModifiers, DateRange } from "react-day-picker";
 
-const useBooks = (initialBooks: Books[]) => {
+const useBooks = (initialBooks: Books[] | undefined) => {
   const queryClient = useQueryClient();
 
   const query = useQuery({
@@ -19,7 +19,7 @@ const useBooks = (initialBooks: Books[]) => {
     }) => {
       const books = query.data;
 
-      return books.filter((book) => {
+      return books?.filter((book) => {
         const matchesSearch =
           book.title.toLowerCase().includes(params.search.toLowerCase()) ||
           book.author.toLowerCase().includes(params.search.toLowerCase());

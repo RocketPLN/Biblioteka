@@ -1,6 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 function Navbar() {
   const user = useSession().data?.user;
@@ -12,7 +14,18 @@ function Navbar() {
         Biblioteka
       </span>
       <span>SearchBar ????</span>
-      <div>{user?.firstName + " " + user?.lastName}</div>
+      {user ? (
+        <div>{user?.firstName + " " + user?.lastName}</div>
+      ) : (
+        <div className="flex gap-2">
+          <Link href="/sign-in">
+            <Button variant="outline">Zaloguj się</Button>
+          </Link>
+          <Link href="/sign-up">
+            <Button variant="link">Zarejstruj się</Button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }

@@ -24,8 +24,8 @@ export default function RootLayout({
       >
         <Provider>
           <SessionProvider>
-            <main>
               <Navbar />
+            <main>
               {children} <Toaster />
             </main>
           </SessionProvider>
