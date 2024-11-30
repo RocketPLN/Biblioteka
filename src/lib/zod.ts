@@ -7,6 +7,7 @@ export const BookSchema = z.object({
   release: z.string(),
   available: z.boolean(),
   genre: z.nativeEnum(Genre),
+  description: z.string(),
 });
 
 export const UserSchema = z.object({

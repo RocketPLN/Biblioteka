@@ -5,46 +5,71 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { z } from "zod";
 
 const getCachedOrders = unstable_cache(
-  async () => db.orders.findMany(),
+  async () =>
+    db.orders.findMany({
+      include: { book: true },
+      orderBy: { createdAt: "asc" },
+    }),
   ["orders"],
   {
     tags: ["orders"],
-  }
+  },
 );
 
 export const Orders = router({
-  getOrders: publicProcedure.query(async () => {
+  getAllOrders: publicProcedure.query(async () => {
     return await getCachedOrders();
   }),
 
-  createOrder: publicProcedure.input(OrderSchema).query(async ({ input }) => {
-    const order = await db.orders.create({
-      data: {
-        userId: input.userId,
-        booksId: input.booksId,
-      },
-    });
+  getOrders: publicProcedure.input(z.string()).query(async ({ input }) => {
+    const orders = (await getCachedOrders()).filter(
+      (order) => order.userId === input,
+    );
 
-    revalidateTag("orders");
-
-    return order;
+    return orders;
   }),
 
-  updateOrder: publicProcedure
-    .input(OrderSchema.extend({ id: z.string() }))
+  createOrder: publicProcedure
+    .input(OrderSchema)
     .mutation(async ({ input }) => {
-      const order = await db.orders.update({
-        where: {
-          id: input.id,
-        },
+      const order = await db.orders.create({
         data: {
           userId: input.userId,
           booksId: input.booksId,
         },
       });
 
+      await db.books.update({
+        where: {
+          id: input.booksId,
+        },
+        data: {
+          available: false,
+        },
+      });
+
       revalidateTag("orders");
+      revalidateTag("books");
 
       return order;
     }),
+
+  updateOrder: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    const order = await db.orders.update({
+      where: { id: input },
+      data: {
+        book: {
+          update: {
+            available: true,
+          },
+        },
+        completed: true,
+      },
+    });
+
+    revalidateTag("orders");
+    revalidateTag("books");
+
+    return order;
+  }),
 });

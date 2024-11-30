@@ -1,3 +1,5 @@
+"use server";
+
 import { server } from "@/services/trpc/server";
 
 import Render from "./components/render";

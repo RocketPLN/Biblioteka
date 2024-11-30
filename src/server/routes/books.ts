@@ -1,16 +1,16 @@
 import { revalidateTag, unstable_cache } from "next/cache";
 import { z } from "zod";
 
+import { BookSchema } from "@/lib/zod";
 import { publicProcedure, router } from "@/server/trpc";
 import db from "@/services/db";
-import { BookSchema } from "@/lib/zod";
 
 const getCachedBooks = unstable_cache(
   async () => db.books.findMany(),
   ["books"],
   {
     tags: ["books"],
-  }
+  },
 );
 
 export const Books = router({
@@ -21,11 +21,11 @@ export const Books = router({
   getBook: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
-      const book = (await getCachedBooks()).find(
-        (book) => book.id === input.id
+      const book = (await getCachedBooks()).filter(
+        (book) => book.id === input.id,
       );
 
-      return book;
+      return book[0];
     }),
 
   createBook: publicProcedure.input(BookSchema).mutation(async ({ input }) => {
@@ -35,6 +35,7 @@ export const Books = router({
         author: input.author,
         release: new Date(input.release),
         available: input.available,
+        description: input.description,
         genre: input.genre,
       },
     });

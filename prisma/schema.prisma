@@ -27,13 +27,14 @@ model User {
 }
 
 model Books {
-  id        String   @id @default(cuid())
-  title     String
-  author    String
-  release   DateTime
-  available Boolean  @default(true)
-  genre     Genre
-  Orders    Orders[]
+  id          String   @id @default(cuid())
+  title       String
+  author      String
+  description String
+  release     DateTime
+  available   Boolean  @default(true)
+  genre       Genre
+  Orders      Orders[]
 }
 
 model Orders {

@@ -13,7 +13,7 @@ async function Navbar() {
 
   return (
     <>
-      {!user?.verified && (
+      {user?.verified === false && (
         <div className="sticky left-0 top-0 m-0 border-b-2 border-destructive bg-destructive text-center text-lg text-background">
           <div className="flex justify-center gap-4 bg-foreground/60 py-2">
             Twój email nie jest zweryfikowany.
@@ -24,9 +24,11 @@ async function Navbar() {
         </div>
       )}
       <nav className="flex items-center justify-between border bg-muted/30 p-2 px-6">
-        <span className="bg-gradient-to-r from-primary to-primary/45 bg-clip-text text-3xl font-bold italic text-transparent">
-          Biblioteka
-        </span>
+        <Link href="/">
+          <span className="bg-gradient-to-r from-primary to-primary/45 bg-clip-text text-3xl font-bold italic text-transparent">
+            Biblioteka
+          </span>
+        </Link>
         <SearchBar />
         {user ? (
           <UserDropdown user={user} />

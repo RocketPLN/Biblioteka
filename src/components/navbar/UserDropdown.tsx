@@ -47,7 +47,7 @@ const UserDropdown = ({ user }: { user: User }) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Button variant="destructive" onClick={() => signOut()}>
-            Wyloguj się <LogOut />
+            Wyloguj się <LogOut size={20} />
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

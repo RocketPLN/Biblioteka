@@ -6,15 +6,15 @@ import { DateRange } from "react-day-picker";
 import { BookSchema } from "@/lib/zod";
 import { Genre } from "@prisma/client";
 
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckedState } from "@radix-ui/react-checkbox";
-import { Button } from "@/components/ui/button";
-import { ClassNameValue } from "tailwind-merge";
 import { cn } from "@/lib/utils";
+import { CheckedState } from "@radix-ui/react-checkbox";
+import { ClassNameValue } from "tailwind-merge";
 
 function Filters({
   handler,

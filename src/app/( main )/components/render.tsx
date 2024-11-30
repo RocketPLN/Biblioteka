@@ -28,7 +28,7 @@ function Render({ books }: { books: Books[] }) {
   return (
     <>
       <Filters handler={handleFilter} className="sticky left-0 top-2 m-2" />
-      <div className="flex h-full flex-wrap justify-center gap-2 p-2">
+      <div className="flex w-full flex-wrap gap-2 p-2">
         {filteredBooks?.length !== 0 ? (
           <>
             {filteredBooks?.map((book) => (
