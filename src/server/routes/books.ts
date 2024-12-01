@@ -55,8 +55,9 @@ export const Books = router({
         data: {
           title: input.title,
           author: input.author,
-          release: input.release,
+          release: new Date(input.release),
           available: input.available,
+          description: input.description,
           genre: input.genre,
         },
       });

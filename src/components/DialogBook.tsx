@@ -22,10 +22,11 @@ const DialogBook = ({ userId, bookId }: { userId: string; bookId: string }) => {
   const order = api.Orders.createOrder.useMutation();
 
   async function onClick() {
-    if (data?.find((order) => order.booksId === bookId)) {
+    if (data?.find((order) => order.booksId === bookId && !order.completed)) {
       toast.error("Próbujesz dodać książke która jest już wypożyczona");
     }
     await order.mutateAsync({ booksId: bookId, userId: userId });
+    toast.success("Dodano pomyślnie");
     router.prefetch(`/book/${bookId}`);
     router.push(`/book/${bookId}`);
   }

@@ -2,7 +2,7 @@
 
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
+const resend = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,
@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendOtp(email: string, otp: string) {
-  return transporter.sendMail({
+  return resend.sendMail({
     from: process.env.EMAIL,
     to: email,
     subject: `Kod weryfikacyjny: ${otp}`,

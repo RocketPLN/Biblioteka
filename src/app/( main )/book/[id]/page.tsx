@@ -23,14 +23,16 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         !book.available && "opacity-50",
       )}
     >
-      <Alert className="absolute left-1/2 top-1/2 z-10 w-fit -translate-x-1/2 -translate-y-1/2 transform bg-muted-foreground text-muted">
-        <AlertTitle className="text-center text-3xl font-black">
-          Nie dostępna
-        </AlertTitle>
-        <AlertDescription className="text-xl font-semibold">
-          Książka już została wypożyczona przez innego użytkownika
-        </AlertDescription>
-      </Alert>
+      {!book.available && (
+        <Alert className="absolute left-1/2 top-1/2 z-10 w-fit -translate-x-1/2 -translate-y-1/2 transform bg-muted-foreground text-muted">
+          <AlertTitle className="text-center text-3xl font-black">
+            Nie dostępna
+          </AlertTitle>
+          <AlertDescription className="text-xl font-semibold">
+            Książka już została wypożyczona przez innego użytkownika
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="col-span-2 h-full overflow-hidden rounded-md border">
         <Image
           src="https://wolnelektury.pl/media/book/cover_clean/saint-exupery-maly-ksiaze_uaQHsUD.jpg"

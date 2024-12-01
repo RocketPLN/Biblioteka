@@ -7,7 +7,7 @@ import { z } from "zod";
 const getCachedOrders = unstable_cache(
   async () =>
     db.orders.findMany({
-      include: { book: true },
+      include: { book: true, user: true },
       orderBy: { createdAt: "asc" },
     }),
   ["orders"],

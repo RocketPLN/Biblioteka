@@ -18,7 +18,7 @@ function Breadcrumb() {
   const lastItem = pathname.at(pathname.length - 1);
 
   return (
-    <BreadC>
+    <BreadC className="p-2">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
