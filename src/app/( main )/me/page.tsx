@@ -26,6 +26,7 @@ const Page = async () => {
           <h1 className="py-4 text-3xl font-extrabold text-secondary-foreground">
             Obecnie wypożyczone
           </h1>
+          <p className="text-lg">Wypożyczone: {uncompletedOrders.length}</p>
           <OrderList orders={uncompletedOrders} />
         </ResizablePanel>
         <ResizableHandle />
@@ -36,6 +37,7 @@ const Page = async () => {
           <h1 className="py-4 text-3xl font-extrabold text-secondary-foreground">
             Historia wypożyczeń
           </h1>
+          <p className="text-lg">Wypożyczono: {finishedOrders.length}</p>
           <OrderList orders={finishedOrders} completed />
         </ResizablePanel>
       </ResizablePanelGroup>

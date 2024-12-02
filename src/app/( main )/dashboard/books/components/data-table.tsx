@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
       <div className="rounded-md border">
         <Table>
           <Dialog>
-            <TableHeader>
+            <TableHeader className="bg-muted">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <Dialog key={cell.id}>
-                      <TableCell>
+                      <TableCell className="capitalize">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

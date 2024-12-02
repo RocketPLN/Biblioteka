@@ -15,7 +15,7 @@ export default function RootLayout({
         width={0}
         height={0}
         sizes="100%"
-        className="absolute top-0 -z-10 w-screen object-cover"
+        className="absolute top-0 -z-10 object-cover md:w-screen"
       />
     </main>
   );

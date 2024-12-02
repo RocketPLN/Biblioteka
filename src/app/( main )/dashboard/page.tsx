@@ -74,14 +74,14 @@ const Dashboard = async () => {
           footer={`W całym roku wypożyczono: ${orders.filter((order) => new Date(order.createdAt).getFullYear() === year).length}`}
         />
       </div>
-      <div className="w-full">
+      <div className="h-full w-full">
         <DashboardCard
           title="Panel Użytkowników"
           description="Tu możesz dodawać, usuwać, blokować użytkowników"
           link="users"
         />
       </div>
-      <div className="w-full">
+      <div className="h-full w-full">
         <DashboardCard
           title="Panel Książek"
           description="Tu możesz dodawać, modyfikować ksiązki"

@@ -22,7 +22,7 @@ function SignIn() {
   }
 
   return (
-    <div className="flex h-screen w-1/2 items-center justify-center bg-background/80 backdrop-blur-md">
+    <div className="flex h-screen w-full items-center justify-center bg-background/80 backdrop-blur-md md:w-1/2">
       <SignInForm onSubmit={onSubmit} />
     </div>
   );

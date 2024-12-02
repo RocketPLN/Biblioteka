@@ -8,9 +8,9 @@ function BookCard({ book }: { book: Books }) {
   const date = new Date(book.release).toLocaleDateString();
 
   return (
-    <div className="flex h-[calc(100vh/3)] flex-col items-center space-y-2 rounded-md border border-primary bg-primary/10 p-2">
+    <div className="flex h-full w-full flex-col items-center space-y-2 rounded-md border bg-muted/40 p-2">
       <h1 className="text-xl font-bold capitalize">{book.title}</h1>
-      <div className="flex h-3/4 w-full items-center justify-center overflow-hidden rounded-md bg-white">
+      <div className="flex h-3/4 w-full items-center justify-center overflow-hidden rounded-md border bg-white">
         <Image
           src="https://wolnelektury.pl/media/book/cover_clean/saint-exupery-maly-ksiaze_uaQHsUD.jpg"
           alt={book.title}
@@ -30,7 +30,9 @@ function BookCard({ book }: { book: Books }) {
         <span>{book.author}</span>
       </div>
       <Link href={`/book/${book.id}`} className="w-full">
-        <Button className="w-full">Zobacz</Button>
+        <Button className="w-full" variant="outline">
+          Zobacz
+        </Button>
       </Link>
     </div>
   );

@@ -50,7 +50,7 @@ function Filters({
   return (
     <div
       className={cn(
-        "flex h-fit flex-col gap-3 rounded-md border-2 p-2",
+        "flex h-fit flex-col gap-3 rounded-md border-2 bg-muted p-2",
         className,
       )}
     >

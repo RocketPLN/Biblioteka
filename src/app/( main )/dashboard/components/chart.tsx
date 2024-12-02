@@ -28,7 +28,8 @@ interface ChartProps<T> {
   footer?: string;
 }
 
-export default function Chart<T>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function Chart<T extends Record<string, any>>({
   chartConfig,
   chartData,
   dataKey,
