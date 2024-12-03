@@ -44,6 +44,21 @@ const updateUser = publicProcedure
     return user;
   });
 
+const verfiedUser = publicProcedure
+  .input(z.string())
+  .mutation(async ({ input }) => {
+    const user = await db.user.update({
+      where: {
+        id: input,
+      },
+      data: {
+        verified: true,
+      },
+    });
+
+    return user;
+  });
+
 const deleteUser = publicProcedure
   .input(z.string())
   .mutation(async ({ input }) => {
@@ -60,5 +75,6 @@ export const User = {
   getUsers,
   createUser,
   updateUser,
+  verfiedUser,
   deleteUser,
 };

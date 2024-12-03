@@ -25,6 +25,7 @@ import { Send } from "@/lib/email";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import bcrypt from "bcryptjs";
+import { EmailHtml } from "@/emails/admin-email";
 
 const UserActions = ({ user }: { user: User }) => {
   const router = useRouter();
@@ -44,10 +45,14 @@ const UserActions = ({ user }: { user: User }) => {
     await removeUser(user.id);
     toast.success("Udało się usunąc");
 
+    const html = await EmailHtml({
+      text: "Twoje Konto zostało usuniente przez administratora",
+    });
+
     await Send({
       to: user.email,
       subject: "Twoje konto",
-      html: `<h1>Twoje Konto zostało usuniente przez administratora</h1>`,
+      html: html,
     });
 
     router.prefetch("/dashboard/users");

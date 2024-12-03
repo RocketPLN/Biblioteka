@@ -1,6 +1,7 @@
 "use server";
 
 import nodemailer from "nodemailer";
+import { emailHtml } from "../emails/otp-email";
 
 const resend = nodemailer.createTransport({
   service: "gmail",
@@ -11,11 +12,13 @@ const resend = nodemailer.createTransport({
 });
 
 export async function sendOtp(email: string, otp: string) {
+  const otpHtml = await emailHtml({ otp });
+
   return resend.sendMail({
     from: process.env.EMAIL,
     to: email,
     subject: `Kod weryfikacyjny: ${otp}`,
-    html: `<h1>Kod weryfikacyjny</h1><p>${otp}</p>`,
+    html: otpHtml,
   });
 }
 

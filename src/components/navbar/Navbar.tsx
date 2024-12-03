@@ -14,7 +14,7 @@ async function Navbar() {
   return (
     <>
       {user?.verified === false && (
-        <div className="sticky left-0 top-0 m-0 border-b-2 border-destructive bg-destructive text-center text-lg text-background">
+        <div className="sticky left-0 top-0 z-10 m-0 border-b-2 border-destructive bg-destructive text-center text-lg text-background">
           <div className="flex justify-center gap-4 bg-foreground/60 py-2">
             Twój email nie jest zweryfikowany.
             <Link href="/verify" className="text-primary/80">

@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/services/trpc/api";
 import { toast } from "sonner";
 import { Send } from "@/lib/email";
+import { EmailHtml } from "@/emails/admin-email";
 
 const SignUpFields: {
   name: keyof z.infer<typeof UserSchema>;
@@ -62,10 +63,12 @@ function UserAdd() {
     await createUser({ ...data });
     toast.success("Użytkownik " + data.firstName + " został utworzony");
 
+    const html = await EmailHtml({ text: "Administrator utworzył ci konto" });
+
     await Send({
       to: data.email,
       subject: "Utworzono ci konto",
-      html: `<h1>Administrator utworzył ci konto</h1><p><a href="localhost:3000">Zobacz</a></p>`,
+      html: html,
     });
 
     router.prefetch("/dashboard/users");
