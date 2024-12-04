@@ -30,6 +30,7 @@ import { EmailHtml } from "@/emails/admin-email";
 const UserActions = ({ user }: { user: User }) => {
   const router = useRouter();
   const { mutateAsync: updateUser } = api.User.updateUser.useMutation();
+  const { mutateAsync: banUser } = api.User.banUser.useMutation();
   const { mutateAsync: removeUser } = api.User.deleteUser.useMutation();
 
   async function Reset() {
@@ -50,6 +51,24 @@ const UserActions = ({ user }: { user: User }) => {
     });
 
     await Send({
+      to: user.email,
+      subject: "Twoje konto",
+      html: html,
+    });
+
+    router.prefetch("/dashboard/users");
+    router.push("/dashboard/users");
+  }
+
+  async function Banned() {
+    await banUser({ id: user.id, banned: !user.banned });
+    toast.success("Udało się zablokować użytkownika");
+
+    const html = await EmailHtml({
+      text: `Twoje Konto zostało ${user.banned ? "odblokowane" : "zablokowane"} przez  administratora`,
+    });
+
+    Send({
       to: user.email,
       subject: "Twoje konto",
       html: html,
@@ -101,7 +120,7 @@ const UserActions = ({ user }: { user: User }) => {
       </Tooltip>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button className="w-full">
+          <Button className="w-full" onClick={Banned}>
             <Construction />
           </Button>
         </TooltipTrigger>

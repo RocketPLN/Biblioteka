@@ -52,6 +52,12 @@ async function Page() {
                 <span className="absolute left-1 top-1 inline-flex h-3 w-3 rounded-full bg-primary" />
               </>
             )}
+            {user.banned && (
+              <>
+                <span className="absolute left-1 top-1 inline-flex size-3 animate-ping rounded-full bg-destructive opacity-75" />
+                <span className="absolute left-1 top-1 inline-flex h-3 w-3 rounded-full bg-destructive" />
+              </>
+            )}
             <p className="text-center text-lg font-semibold">
               {user.firstName} {user.lastName}
             </p>

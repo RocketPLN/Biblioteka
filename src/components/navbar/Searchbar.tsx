@@ -16,7 +16,9 @@ const SearchBar = () => {
 
   const filteredBoooks = books?.filter(
     (b) =>
-      (b.title.includes(search) || b.author.includes(search)) && b.available,
+      (b.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+        b.author.toLocaleLowerCase().includes(search.toLocaleLowerCase())) &&
+      b.available,
   );
 
   return (

@@ -9,7 +9,7 @@ function BookCard({ book }: { book: Books }) {
 
   return (
     <div className="flex h-full w-full flex-col items-center space-y-2 rounded-md border bg-muted/40 p-2">
-      <h1 className="text-xl font-bold capitalize">{book.title}</h1>
+      <h1 className="mb-4 text-xl font-bold capitalize">{book.title}</h1>
       <div className="flex h-3/4 w-full items-center justify-center overflow-hidden rounded-md border bg-white">
         <Image
           src="https://wolnelektury.pl/media/book/cover_clean/saint-exupery-maly-ksiaze_uaQHsUD.jpg"

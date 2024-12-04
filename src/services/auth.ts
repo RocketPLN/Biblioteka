@@ -39,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           lastName: tempUser.lastName,
           roles: tempUser.roles,
           verified: tempUser.verified,
+          banned: tempUser.banned,
         };
 
         return user;
@@ -65,6 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           lastName: dbUser.lastName,
           roles: dbUser.roles,
           verified: dbUser.verified,
+          banned: dbUser.banned,
         },
       };
     },

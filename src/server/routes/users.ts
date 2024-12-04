@@ -59,6 +59,21 @@ const verfiedUser = publicProcedure
     return user;
   });
 
+const banUser = publicProcedure
+  .input(z.object({ id: z.string(), banned: z.boolean() }))
+  .mutation(async ({ input }) => {
+    const user = await db.user.update({
+      where: {
+        id: input.id,
+      },
+      data: {
+        banned: input.banned,
+      },
+    });
+
+    return user;
+  });
+
 const deleteUser = publicProcedure
   .input(z.string())
   .mutation(async ({ input }) => {
@@ -76,5 +91,6 @@ export const User = {
   createUser,
   updateUser,
   verfiedUser,
+  banUser,
   deleteUser,
 };

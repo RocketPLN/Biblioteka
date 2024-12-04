@@ -10,6 +10,7 @@ declare module "next-auth" {
     lastName: string;
     roles: Roles[];
     verified: boolean;
+    banned: boolean;
   }
 
   interface Session {
