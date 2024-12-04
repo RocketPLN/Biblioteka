@@ -28,22 +28,25 @@ export const Books = router({
       return book[0];
     }),
 
-  createBook: publicProcedure.input(BookSchema).mutation(async ({ input }) => {
-    const book = await db.books.create({
-      data: {
-        title: input.title,
-        author: input.author,
-        release: new Date(input.release),
-        available: input.available,
-        description: input.description,
-        genre: input.genre,
-      },
-    });
+  createBook: publicProcedure
+    .input(BookSchema.extend({ imageKey: z.string() }))
+    .mutation(async ({ input }) => {
+      const book = await db.books.create({
+        data: {
+          title: input.title,
+          author: input.author,
+          release: new Date(input.release),
+          available: input.available,
+          description: input.description,
+          genre: input.genre,
+          imagekey: input.imageKey,
+        },
+      });
 
-    revalidateTag("books");
+      revalidateTag("books");
 
-    return book;
-  }),
+      return book;
+    }),
 
   updateBook: publicProcedure
     .input(BookSchema.extend({ id: z.string() }))

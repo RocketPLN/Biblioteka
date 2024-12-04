@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTMLInputTypeAttribute } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
+import { HTMLInputTypeAttribute, useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { api } from "@/services/trpc/api";
 
@@ -14,6 +14,9 @@ import {
   SelectGenreContent,
   SelectGenreTrigger,
 } from "@/components/form/selectGenre";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -23,20 +26,24 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { DialogClose } from "@/components/ui/dialog";
 
 import { CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
+
+import {
+  generateClientDropzoneAccept,
+  generatePermittedFileTypes,
+} from "uploadthing/client";
+import { useUploadThing } from "@/services/uploadthing";
+import { useDropzone } from "@uploadthing/react";
 
 const BookFields: {
   name: keyof z.infer<typeof BookSchema>;
@@ -63,6 +70,30 @@ const BookFields: {
 const BookSchemaForm = BookSchema.merge(z.object({ release: z.date() }));
 
 const CreateBookForm = () => {
+  const [files, setFiles] = useState<File[]>([]);
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+  }, []);
+
+  const { startUpload, routeConfig } = useUploadThing("bookCoverUploader", {
+    onClientUploadComplete: () => {
+      toast.success("uploaded successfully!");
+    },
+    onUploadError: () => {
+      toast.error("error occurred while uploading");
+    },
+    onUploadBegin: (fileName) => {
+      console.log("upload has begun for", fileName);
+    },
+  });
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: generateClientDropzoneAccept(
+      generatePermittedFileTypes(routeConfig).fileTypes,
+    ),
+  });
+
   const router = useRouter();
   const createBook = api.Books.createBook.useMutation();
 
@@ -78,10 +109,14 @@ const CreateBookForm = () => {
   });
 
   async function onSubmit(data: z.infer<typeof BookSchemaForm>) {
+    const file = await startUpload(files);
+
     await createBook.mutateAsync({
       ...data,
       release: data.release.toDateString(),
+      imageKey: file?.at(0)?.key as string,
     });
+
     toast.success("Udało się dodać książke");
     router.prefetch("/dashboard/books");
     router.push("/dashboard/books");
@@ -176,6 +211,13 @@ const CreateBookForm = () => {
             </FormItem>
           )}
         />
+        <div
+          {...getRootProps()}
+          className="w-fit cursor-pointer rounded-sm border bg-muted p-2"
+        >
+          <input {...getInputProps()} disabled={files.length > 0} />
+          {files.length == 0 ? "Przeciągni tu pliki" : "Dodałeś juz pliki"}
+        </div>
         <DialogClose asChild>
           <Button type="submit">Dodaj</Button>
         </DialogClose>

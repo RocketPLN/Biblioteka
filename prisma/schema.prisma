@@ -36,6 +36,7 @@ model Books {
   release     DateTime
   available   Boolean  @default(true)
   genre       Genre
+  imagekey    String
   Orders      Orders[]
 }
 

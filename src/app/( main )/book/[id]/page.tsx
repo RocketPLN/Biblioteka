@@ -8,11 +8,14 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import DialogBook from "@/components/DialogBook";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { utapi } from "@/server/uploadthing";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const session = await auth();
 
   const book = await server.Books.getBook({ id: (await params).id });
+
+  const url = await utapi.getSignedURL(book.imagekey);
 
   const releaseDate = new Date(book.release).toLocaleDateString();
 
@@ -35,7 +38,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       )}
       <div className="col-span-2 h-full overflow-hidden rounded-md border">
         <Image
-          src="https://wolnelektury.pl/media/book/cover_clean/saint-exupery-maly-ksiaze_uaQHsUD.jpg"
+        src={url.url}
           alt={book.title}
           width={0}
           height={0}

@@ -9,8 +9,6 @@ async function Navbar() {
   const session = await auth();
   const user = session?.user;
 
-  // TODO: dokonczyc
-
   return (
     <>
       {user?.verified === false && (

@@ -18,21 +18,21 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutateAsync } = api.User.createUser.useMutation();
+  const { mutate } = api.User.createUser.useMutation();
 
   async function onSubmit(data: z.infer<typeof UserSchema>) {
     const otp = await generateOTP();
     try {
       const pwHash = await bcrypt.hash(data.password, 10);
 
-      await mutateAsync({
+      mutate({
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
         password: pwHash,
       });
     } catch (error) {
-      toast.error(error as string);
+      console.log(error);
     } finally {
       setOTP(otp);
       setEmail(data.email);

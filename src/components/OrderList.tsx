@@ -39,7 +39,7 @@ const OrderList = ({
           <div className="flex w-1/2 justify-center gap-x-4">
             <div className="flex w-1/3 items-center justify-center overflow-hidden rounded-md bg-white">
               <Image
-                src="https://wolnelektury.pl/media/book/cover_clean/saint-exupery-maly-ksiaze_uaQHsUD.jpg"
+                src={`https://utfs.io/f/${order.book.imagekey}`}
                 alt={order.book.title}
                 width={0}
                 height={0}
