@@ -60,6 +60,11 @@ const Dashboard = async () => {
 
   return (
     <div className="grid w-full grid-cols-2 grid-rows-2 justify-items-center gap-x-4 gap-y-2">
+      <style>{`
+        body {
+          overflow:hidden;
+        }
+      `}</style>
       <div className="w-full">
         <Chart
           title="Utworzeni Użytkownicy"
