@@ -1,18 +1,13 @@
 import { auth } from "@/services/auth";
 import { NextResponse } from "next/server";
 
-const userRoutes = ["/me", "/order"];
-
 export default auth((req) => {
-  if (
-    !req.auth &&
-    userRoutes.some((route) => req.nextUrl.pathname.includes(route))
-  ) {
+  if (!req.auth) {
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
 
   if (
-    (!req.auth || !req.auth.user.roles.includes("ADMIN")) &&
+    !req.auth.user.roles.includes("ADMIN") &&
     req.nextUrl.pathname.includes("/dashboard")
   ) {
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
