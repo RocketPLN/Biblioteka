@@ -11,8 +11,16 @@ import { api } from "@/services/trpc/api";
 import { UserSchema } from "@/lib/zod";
 import SignUpForm from "./components/form";
 import Otp from "./components/otp";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 function SignUp() {
+  const session = useSession();
+
+  if (session.data?.user) {
+    redirect("/");
+  }
+
   const [sign, setSign] = useState(false);
   const [otp, setOTP] = useState("");
   const [email, setEmail] = useState("");

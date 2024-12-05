@@ -3,8 +3,16 @@ import { server } from "@/services/trpc/server";
 import { ChartConfig } from "@/components/ui/chart";
 import Chart from "./components/chart";
 import DashboardCard from "./components/card";
+import { auth } from "@/services/auth";
+import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
+  const session = await auth();
+
+  if (!session?.user || !session.user.roles.includes("ADMIN")) {
+    redirect("/");
+  }
+
   const users = await server.User.getUsers();
   const orders = await server.Orders.getAllOrders();
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 import { api } from "@/services/trpc/api";
 import SignInForm, { UserSignIn } from "./components/form";
@@ -9,6 +9,12 @@ import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
 function SignIn() {
+  const session = useSession();
+
+  if (session.data?.user) {
+    redirect("/");
+  }
+
   const { data: users } = api.User.getUsers.useQuery();
 
   async function onSubmit(data: z.infer<typeof UserSignIn>) {
