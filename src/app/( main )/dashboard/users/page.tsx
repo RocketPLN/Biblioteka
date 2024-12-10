@@ -14,10 +14,16 @@ import UserAdd from "./userAdd";
 
 import { auth } from "@/services/auth";
 import { server } from "@/services/trpc/server";
+import { redirect } from "next/navigation";
+
 
 async function Page() {
   const users = await server.User.getUsers();
   const session = await auth();
+
+  if (!session?.user || !session.user.roles.includes("ADMIN")) {
+    redirect("/");
+  }
 
   return (
     <div className="grid w-full grid-cols-3 place-items-center gap-3 rounded-sm border bg-muted/70 p-2 pb-4 drop-shadow-md md:grid-cols-4">
