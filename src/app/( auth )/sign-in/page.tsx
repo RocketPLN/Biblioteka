@@ -25,6 +25,7 @@ function SignIn() {
     try{
     await signIn("credentials", { email: data.email, password: data.password });}
     catch(e) {
+      console.log(e)
       toast.error("Błędne dane")
     } finally{
       toast.success("Zalogowano pomyślnie!");
