@@ -22,9 +22,14 @@ function SignIn() {
       toast.error("Nie istnieje taki użytkownik");
       return;
     }
-    await signIn("credentials", { email: data.email, password: data.password });
-    toast.success("Zalogowano pomyślnie!");
-    redirect("/");
+    try{
+    await signIn("credentials", { email: data.email, password: data.password });}
+    catch(e) {
+      toast.error("Błędne dane")
+    } finally{
+      toast.success("Zalogowano pomyślnie!");
+      redirect("/");
+    }
   }
 
   return (

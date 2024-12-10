@@ -50,7 +50,11 @@ function Otp({
       lastName: user?.lastName as string,
     });
 
-    signIn("credentials", { email: email, password: password });
+    try{
+      await signIn("credentials", { email: email, password: password });
+    } catch (e) {
+      console.log(e)
+    }
 
     redirect("/");
   }
