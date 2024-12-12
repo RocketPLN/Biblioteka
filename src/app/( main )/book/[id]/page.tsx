@@ -58,7 +58,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <ScrollArea className="my-4 h-[50vh] w-4/5 grow text-pretty rounded-sm border p-2">
           {book.description}
         </ScrollArea>
-        <DialogBook bookId={book.id} userId={session?.user.id as string} />
+        <DialogBook bookId={book.id} userId={session?.user.id as string} disabled={session?.user.banned as boolean} />
       </div>
     </div>
   );

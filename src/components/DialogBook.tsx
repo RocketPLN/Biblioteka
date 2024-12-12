@@ -16,7 +16,7 @@ import { api } from "@/services/trpc/api";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const DialogBook = ({ userId, bookId }: { userId: string; bookId: string }) => {
+const DialogBook = ({ userId, bookId, disabled}: { userId: string; bookId: string, disabled: boolean }) => {
   const router = useRouter();
   const { data } = api.Orders.getAllOrders.useQuery();
   const order = api.Orders.createOrder.useMutation();
@@ -34,7 +34,7 @@ const DialogBook = ({ userId, bookId }: { userId: string; bookId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex w-4/5 items-center py-6 text-2xl">
+        <Button className="flex w-4/5 items-center py-6 text-2xl" disabled={disabled}>
           Wypożycz <BookmarkPlus />
         </Button>
       </DialogTrigger>
